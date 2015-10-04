@@ -1,0 +1,49 @@
+.column {
+	float: left;
+	background-color: black;
+}
+
+.cell {
+	width: 12px;
+	height: 12px;
+}
+
+.visited>.cell-centre, 
+.point-left>.left-connection,
+.point-right>.right-connection,
+.point-up>.up-connection,
+.point-down>.down-connection {
+	background-color: white;
+}
+
+.cell-centre {
+	width: 6px;
+	height: 6px;
+	float: left;
+}
+
+.left-connection {
+	width: 3px;
+	height: 6px;
+	float: left;
+}
+
+.right-connection {
+	width: 3px;
+	height: 6px;
+	float: left;
+}
+
+.up-connection {
+	height: 3px;
+	width: 6px;
+	margin: 0 3px 0 3px;
+	float: left;
+}
+
+.down-connection {
+	height: 3px;
+	width: 6px;
+	margin: 0 3px 0 3px;
+	float: left;
+}
