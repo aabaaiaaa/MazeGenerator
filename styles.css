@@ -1,9 +1,10 @@
-.column {
+.row {
 	float: left;
 	background-color: black;
 }
 
 .cell {
+	float: left;
 	width: 12px;
 	height: 12px;
 }

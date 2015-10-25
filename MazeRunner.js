@@ -27,7 +27,6 @@ MazeRunner = function(args){
 			var current = maze.getAt(currentRow, currentColumn);
 			if(current == 0){
 				setPath.call(this); // mark space as a path
-				maze.showGridStatus();
 				moved = true;
 			}
 			if(!moveToNextValidSpace() && !moveBack()){

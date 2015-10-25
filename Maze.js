@@ -3,43 +3,48 @@ Maze = function(args){
 	var width = args.width;
 	var grid = [];
 
-	for(var i = 0;i<height;i++){
-		var columns = [];
-		for(var x = 0;x<width;x++){
-			columns.push(0);
+	(function(){
+		// generate placeholder element for the whole maze
+		var newMazePlaceholderDiv = $("<div class='maze'>");
+
+		// generate logical rows and cells
+		for(var i = 0;i<height;i++){
+			var row = [];
+			for(var x = 0;x<width;x++){
+				row.push(0);
+			}
+			grid.push(row);
 		}
-		grid.push(columns);
-	}
-	$.each(grid, function(cIndex, column){
-		var newColumn = $("<div class='column col" + cIndex + "'>");
-		$.each(grid, function(rIndex, row){
-			var newCell = $("<div class='cell row" + rIndex + "'>");
-			newCell.append("<div class='up-connection'>");
-			newCell.append("<div class='left-connection'>");
-			newCell.append("<div class='cell-centre'>");
-			newCell.append("<div class='right-connection'>");
-			newCell.append("<div class='down-connection'>");
-			newColumn.append(newCell);
+
+		// generate visual rows and cells
+		$.each(grid, function(rowIndex, row){
+			var newRow = $("<div class='row row" + rowIndex + "'>");
+			$.each(row, function(colIndex, column){
+				var newCell = $("<div class='cell cell" + colIndex + "'>");
+				newCell.append("<div class='up-connection'>");
+				newCell.append("<div class='left-connection'>");
+				newCell.append("<div class='cell-centre'>");
+				newCell.append("<div class='right-connection'>");
+				newCell.append("<div class='down-connection'>");
+				newRow.append(newCell);
+			});
+			newMazePlaceholderDiv.append(newRow);
 		});
-		$("#maze-grid").append(newColumn);
-	});
-	this.showGridStatus = function(){
-		// $.each(grid, function(index, column){
-		// 	console.log(column);
-		// });
-		// console.log("-------------");
+		$("body").append(newMazePlaceholderDiv);
+	})();
+
+	// public methods
+	this.getAt = function(row, cell){
+		return grid[row][cell];
 	};
-	this.getAt = function(row, col){
-		return grid[col][row];
-	};
-	this.setAt = function(runner, row, col, value){
-		grid[col][row] = value;
+	this.setAt = function(runner, row, cell, value){
+		grid[row][cell] = value;
 		drawConnection({
 			row: runner.previousLocation().row,
 			col: runner.previousLocation().col
 		}, {
 			row: row,
-			col: col
+			col: cell
 		});
 	};
 	this.getHeight = function(){
@@ -48,10 +53,12 @@ Maze = function(args){
 	this.getWidth = function(){
 		return width;
 	};
+
+	// private methods
 	var drawConnection = function(from, to){
 		if(from.row == to.row && from.col == to.col) return;
-		var fromEl = $(".col" + from.col + " .row" + from.row);
-		var toEl = $(".col" + to.col + " .row" + to.row);
+		var fromEl = $(".row" + from.row + " .cell" + from.col);
+		var toEl = $(".row" + to.row + " .cell" + to.col);
 		if(from.row == to.row){
 			// is not up or down so is left or right
 			fromEl.addClass((from.col < to.col) ? "point-right" : "point-left");

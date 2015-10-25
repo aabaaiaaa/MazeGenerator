@@ -7,8 +7,8 @@ app = new (function(){
 	this.tests = function(){
 		console.log("test 1 started");
 		maze = new Maze({
-			height: 25,
-			width: 25
+			height: 13,
+			width: 24
 		});
 		mazeRunner = new MazeRunner({
 			maze: maze
