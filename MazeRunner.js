@@ -1,11 +1,15 @@
 MazeRunner = function(args){
+	// private properties
 	var maze = args.maze;
 	var currentRow;
 	var currentColumn;
 	var locationHistory = [];
 	var speed = 10;
+	var datetimeStarted;
 
+	// public methods
 	this.run = function(){
+		datetimeStarted = new Date();
 		setStartingLocation(0, 0); // set starting point
 		setTimeout(tick.bind(this), speed);
 	};
@@ -15,6 +19,8 @@ MazeRunner = function(args){
 			col: currentColumn
 		};
 	};
+
+	// private methods
 	var setStartingLocation = function(row, col){
 		currentRow = row, currentColumn = col;
 	};
@@ -30,11 +36,15 @@ MazeRunner = function(args){
 				moved = true;
 			}
 			if(!moveToNextValidSpace() && !moveBack()){
-				console.log("beginning reached");
+				mazeFinished();
 				return;
 			}
 		}
 		setTimeout(tick.bind(this), speed);
+	};
+	var mazeFinished = function(){
+		var timeTakenToFinish = (new Date() - datetimeStarted) / 1000;
+		console.log("Maze Runner finished in " + timeTakenToFinish + " seconds for a " + maze.getHeight() + "x" + maze.getWidth() + " maze");
 	};
 	var moveBack = function(){
 		locationHistory.pop(); // remove current location

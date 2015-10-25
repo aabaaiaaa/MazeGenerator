@@ -1,11 +1,13 @@
 Maze = function(args){
+	// private properties
 	var height = args.height;
 	var width = args.width;
 	var grid = [];
+	var gridDomElName = "maze-" + Math.ceil(Math.random() * 1000000);	// I wouldn't recommend having more than 1 million mazes
 
 	(function(){
 		// generate placeholder element for the whole maze
-		var newMazePlaceholderDiv = $("<div class='maze'>");
+		var newMazePlaceholderDiv = $("<div id='" + gridDomElName + "'>");
 
 		// generate logical rows and cells
 		for(var i = 0;i<height;i++){
@@ -57,8 +59,8 @@ Maze = function(args){
 	// private methods
 	var drawConnection = function(from, to){
 		if(from.row == to.row && from.col == to.col) return;
-		var fromEl = $(".row" + from.row + " .cell" + from.col);
-		var toEl = $(".row" + to.row + " .cell" + to.col);
+		var fromEl = $("#" + gridDomElName + " .row" + from.row + " .cell" + from.col);
+		var toEl = $("#" + gridDomElName + " .row" + to.row + " .cell" + to.col);
 		if(from.row == to.row){
 			// is not up or down so is left or right
 			fromEl.addClass((from.col < to.col) ? "point-right" : "point-left");
